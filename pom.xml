@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.2.RELEASE</version>
+  </parent>
+
+  <groupId>com.study.cloud.alibaba</groupId>
+  <artifactId>practiseAlibabaSpringCloud</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>demo</name>
+  <packaging>pom</packaging>
+  <description>Demo project for Spring Boot</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <springcloud-alibaba.version>2.2.3.RELEASE</springcloud-alibaba.version>
+    <alibaba.seata.version>2.2.0.RELEASE</alibaba.seata.version>
+    <alibaba.druid.version>1.2.15</alibaba.druid.version>
+    <seata-spring-boot-starter.version>1.4.2</seata-spring-boot-starter.version>
+    <swagger.version>2.2.7</swagger.version>
+    <openfeign.version>2.2.3.RELEASE</openfeign.version>
+    <mybatisplus.version>3.1.0</mybatisplus.version>
+    <springboot.version>2.3.2.RELEASE</springboot.version>
+    <xxl.job.version>2.3.0</xxl.job.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <shiro-spring.version>1.7.1</shiro-spring.version>
+    <shiro.version>1.7.1</shiro.version>
+    <!-- 修改版本，低于这个版本的有 远程代码执行漏洞（CVE-2021-42550） -->
+    <logback.version>1.2.9</logback.version>
+    <app.version>1.0.0-SNAPSHOT</app.version>
+    <!-- Spring Cloud Hoxton.SR8升级到Spring Cloud 2020 https://blog.csdn.net/baidu_28283893/article/details/125542656-->
+    <!--spring.cloud.version>2020.0.1</spring.cloud.version-->
+    <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
+    <spring-cloud-openfeign.version>2.2.5.RELEASE</spring-cloud-openfeign.version>
+  </properties>
+
+  <modules>
+    <module>springcloud-nacos-commons</module>
+    <module>springcloud-nacos-order</module>
+    <module>springcloud-nacos-consumer</module>
+    <module>springcloud-jdbc-mybatis</module>
+
+    <module>springcloud-nacos-consumer-1</module>
+    <module>springcloud-config-product</module>
+    <module>springcloud-sentinel-product</module>
+    <module>springcloud-sentinel-configatweb</module>
+
+    <module>springcloud-nacos-order-ribbon</module>
+    <module>springcloud-nacos-order-balancecsutomize</module>
+    <module>springcloud-nacos-order-loadbalance</module>
+    <module>springcloud-order-openfeign</module>
+    <module>springcloud-openfeign-sentinel</module>
+
+    <module>springcloud-gateway</module>
+
+
+
+    <!--
+    <module>springcloud-nacos-discovery-config-server</module>
+    -->
+  </modules>
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web-services</artifactId>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>${springcloud-alibaba.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring.cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+     <!--
+     进入到这里面可以看到 spring-cloud的具体的 dependencies, 里面就有openfeign的groupId和 artifactId
+     <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-dependencies</artifactId>
+      -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-openfeign-dependencies</artifactId>
+        <version>${spring-cloud-openfeign.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-core</artifactId>
+        <version>${swagger.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-models</artifactId>
+        <version>${swagger.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>${springboot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>${springboot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>${alibaba.druid.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid</artifactId>
+        <version>${alibaba.druid.version}</version>
+      </dependency>
+    </dependencies>
+
+  </dependencyManagement>
+
+  <build>
+
+    <!--插件管理-->
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${springboot.version}</version>
+          <!-- repackage 创建一个自动可执行的jar或war文件。它可以替换常规的artifact，或者用一个单独的classifier附属在maven构建的生命周期中。 -->
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>
