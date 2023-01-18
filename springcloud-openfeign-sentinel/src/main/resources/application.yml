@@ -1,0 +1,230 @@
+spring:
+
+  profiles:
+    active: dev
+  application:
+    name: openfeign-sentinel
+  cloud:
+    nacos:
+      discovery:
+        #虚拟机集群
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+
+        ephemeral: true
+        # 如果没有指定命令空间，则默认命令空间为PUBLIC (好像除了PUBLIC，其他的时候用名字不行，必须用id)
+        namespace: a879cac6-3fac-4ddb-822a-36132829d72c
+        #namespace: public
+        group: DemoAliCloud1
+    sentinel:
+      transport:
+        port: 28819
+        #client-ip: 192.168.31.1
+        dashboard: 127.0.0.1:8380
+      web-context-unify: false #链路规则拒绝收敛
+
+      #Properties properties = new Properties();
+      #properties.put(PropertyKeyConst.SERVER_ADDR, "192.168.3.67:8819");
+      #properties.put(PropertyKeyConst.NAMESPACE, "a879cac6-3fac-4ddb-822a-36132829d72c");
+#
+      #ReadableDataSource<String, List<FlowRule>> flowRuleDataSource = new NacosDataSource<>(properties, "DemoAliCloud1", "openfeign-sentinel-sentinelConfig",
+      #source -> JSON.parseObject(source, new TypeReference<List<FlowRule>>() {}));
+      #FlowRuleManager.register2Property(flowRuleDataSource.getProperty());
+      datasource:
+
+        flowLimitSource: #这个可以自定义
+          nacos: ## 选择数据源为nacos 这个不能少，不然失败
+            serverAddr: 192.168.3.67:8819
+            namespace: a879cac6-3fac-4ddb-822a-36132829d72c
+            username: nacos
+            password: nacos
+            data-id: openfeign-sentinel-sentinelConfig
+            groupId: DemoAliCloud1
+            rule-type: flow
+            #private String serverAddr;
+            #private String username;
+            #private String password;
+            #@NotEmpty
+            #private String groupId = "DEFAULT_GROUP";
+            #@NotEmpty
+            #private String dataId;
+            #private String endpoint;
+            #private String namespace;
+            #private String accessKey;
+            #private String secretKey;
+  datasource:
+    # master 数据库采用 MySql 数据库
+    master:
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/ganfeng?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      username: ganfeng
+      password: ganfeng
+    second:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://192.168.3.67:3306/testmybatis?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      username: nacos
+      password: nacos
+    # slave 数据库采用 h2
+    slave:
+      url: jdbc:h2:~/test
+      username: sa
+      password: sa
+    hikari:
+      master:
+        pool-name: jpa-hikari-pool-master
+        max-lifetime: 900000
+        maximum-pool-size: 8
+      slave:
+        pool-name: jpa-hikari-pool-slave
+        max-lifetime: 500000
+        maximum-pool-size: 6
+    druid:
+      initial-size: 5  # 初始化大小
+      min-idle: 5  # 最小
+      max-active: 100  # 最大
+      max-wait: 60000  # 配置获取连接等待超时的时间
+      time-between-eviction-runs-millis: 60000  # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 300000  # 指定一个空闲连接最少空闲多久后可被清除，单位是毫秒
+      validationQuery: select 'x'
+      test-while-idle: true  # 当连接空闲时，是否执行连接测试
+      test-on-borrow: false  # 当从连接池借用连接时，是否测试该连接
+      test-on-return: false  # 在连接归还到连接池时是否测试该连接
+      filters: config,wall,stat  # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      poolPreparedStatements: true # 打开PSCache，并且指定每个连接上PSCache的大小
+      maxPoolPreparedStatementPerConnectionSize: 20
+      maxOpenPreparedStatements: 20
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.slowSqlMillis=200;druid.stat.logSlowSql=true;config.decrypt=false
+      # 合并多个DruidDataSource的监控数据
+      #use-global-data-source-stat: true
+      #WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      web-stat-filter:
+        enabled: true #是否启用StatFilter默认值true
+        url-pattern: /*
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
+        session-stat-enable: true
+        session-stat-max-count: 10
+      #StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+      stat-view-servlet:
+        enabled: true #是否启用StatViewServlet默认值true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+
+
+
+
+feign:
+  sentinel:
+    #openFeign 整合 sentinel
+    enabled: true
+
+  client:
+    config:
+      #服务名
+      product-consumer:
+        loggerLevel: FULL
+        #连接超时间 ，系统默认是2秒
+        connectTimeout: 5000
+        #请求处理超时时间, 系统默认是5秒
+        readTimeout: 30000
+        #contract: feign.Contract.Default #设置为默认的契约（还原成了原生注解）
+        requestInterceptors[0]: com.study.cloud.alibaba.interceptor.CustomFeignInterceptor
+
+      nacos-true-consumer:
+        loggerLevel: BASIC
+
+
+#springboot默认的日志级别是info， openfeign打印日志需要debug级别, 也可以在logback.xml 中设置
+logging:
+  level:
+    com.study.cloud.alibaba.api.v1.feign: debug
+
+
+
+
+
+
+
+
+# 功能              dbcp		          druid		    c3p0          tomcat-jdbc		 HikariCP
+# 是否支持PSCache   是                    是            是            否                 否
+# 监控              jmx                   jmx/log/http  jmx,log       jmx                jmx
+# 扩展性            弱                    好            弱            弱                 弱
+# sql拦截及解析     无                    支持          无            无                 无
+# 代码              简单                  中等          复杂          简单               简单
+# 更新时间          2015.8.6              2015.10.10    2015.12.09                       2015.12.3
+# 特点             依赖于 common-pool     阿里开源，    历史久远，                       优化力度大，
+#                                        功能全面      代码逻辑复杂，                   功能简单，
+# 且不易维护                                           起源于boneCP
+# 连接池管理        LinkedBlockingDeque   数组                        FairBlockingQueue  threadlocal+CopyOnWriteArrayList
+
+
+  #1.JDBC数据源
+#  datasource:
+#    druid:
+#      first:
+#        url: jdbc:mysql://127.0.0.1:3306/ganfeng?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+#        username: gangfeng
+#        password: gangfeng
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        #初始化连接池的连接数量 大小，最小，最大
+#        initial-size: 5
+#        min-idle: 5
+#        max-active: 20
+#        #配置获取连接等待超时的时间
+#        max-wait: 60000
+#        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+#        time-between-eviction-runs-millis: 60000
+#        # 配置一个连接在池中最小生存的时间，单位是毫秒
+#        min-evictable-idle-time-millis: 30000
+#        # 配置一个连接在池中最大生存的时间，单位是毫秒
+#        max-evictable-idle-time-millis: 300000
+#        validation-query: SELECT 1 FROM user
+#        test-while-idle: true
+#        test-on-borrow: true
+#        test-on-return: false
+#        # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+#        pool-prepared-statements: true
+#        max-pool-prepared-statement-per-connection-size: 20
+#        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+#        filters: stat,wall,slf4j
+#        filter:
+#          stat:
+#            merge-sql: true
+#            slow-sql-millis: 5000
+#
+#      second:
+#        username: root
+#        password: ****
+#        url: jdbc:mysql://localhost:3306/second?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        #初始化连接池的连接数量 大小，最小，最大
+#        initial-size: 5
+#        min-idle: 5
+#        max-active: 20
+#        #配置获取连接等待超时的时间
+#        max-wait: 60000
+#        #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+#        time-between-eviction-runs-millis: 60000
+#        # 配置一个连接在池中最小生存的时间，单位是毫秒
+#        min-evictable-idle-time-millis: 30000
+#        # 配置一个连接在池中最大生存的时间，单位是毫秒
+#        max-evictable-idle-time-millis: 300000
+#        validation-query: SELECT 1 FROM user
+#        test-while-idle: true
+#        test-on-borrow: true
+#        test-on-return: false
+#        # 是否缓存preparedStatement，也就是PSCache  官方建议MySQL下建议关闭   个人建议如果想用SQL防火墙 建议打开
+#        pool-prepared-statements: true
+#        max-pool-prepared-statement-per-connection-size: 20
+#        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+#        filters: stat,wall,slf4j
+#        filter:
+#          stat:
+#            merge-sql: true###
+#            slow-sql-millis: 5000
+

@@ -1,0 +1,43 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gateway-provider
+  cloud:
+    nacos:
+      discovery:
+        #虚拟机集群
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        namespace: public
+        ephemeral: true #是否是临时的，默认是 true
+    gateway:
+      discovery:
+        locator:
+          #表明gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          enabled: true
+          lower-case-service-id: true  #是将请求路径上的服务名配置为小写（因为服务注册的时候，向注册中心注册时将服务名转成大写的了
+      routes: # 路由数组[路由 就是指定当请求满足什么条件的时候转到哪个微服务]
+        - id: product_route # 当前路由的标识, 要求唯一
+          #uri: http://localhost:28814 # 请求要转发到的地址
+          uri: lb://order-ribbon  # 注册中心中的服务吗 (这个就是需要转发到的地址的在 nacos 注册中心的服务名)
+          order: 1 # 路由的优先级,数字越小级别越高
+          predicates: # 断言(就是路由转发要满足的条件)
+            - Path=/product-serv/** # 当请求路径满足Path指定的规则时,才进行路由转发
+          filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+            - StripPrefix=1 # 转发之前去掉1层路径
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+            allowed-methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+
+

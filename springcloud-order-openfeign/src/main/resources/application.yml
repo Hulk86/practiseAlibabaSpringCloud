@@ -1,0 +1,58 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: nacos-provider_v1
+  cloud:
+    nacos:
+      discovery:
+        #虚拟机集群
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        namespace: public
+        ephemeral: true
+
+
+  # 调用链 Sleuth + ZipKin
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    enabled: true
+    base-url: http://192.168.135.1:9411/ # 指定了Zipkin服务器的地址
+    discoveryClientEnabled: false
+    sender:
+      type: web
+#rstyro:
+#  shiro:
+#    enabled: true
+#shiro:
+#  enabled: true
+#  annotations:
+#    enabled: false
+feign:
+  client:
+    config:
+      #服务名
+      product-consumer:
+        loggerLevel: FULL
+        #连接超时间 ，系统默认是2秒
+        connectTimeout: 5000
+        #请求处理超时时间, 系统默认是5秒
+        readTimeout: 30000
+        #contract: feign.Contract.Default #设置为默认的契约（还原成了原生注解）
+        requestInterceptors[0]: com.study.cloud.alibaba.interceptor.CustomFeignInterceptor
+
+
+      nacos-true-consumer:
+        loggerLevel: BASIC
+
+#springboot默认的日志级别是info， openfeign打印日志需要debug级别, 也可以在logback.xml 中设置
+logging:
+  level:
+    com.study.cloud.alibaba.api.v1.feign: debug
+

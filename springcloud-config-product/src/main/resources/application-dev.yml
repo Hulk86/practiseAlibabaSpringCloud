@@ -1,0 +1,9 @@
+server:
+  port: 38813
+
+# 在配置中心： 我们可以通过 profile 进行设置，
+# 和 服务名相同的 dataID 的文件， 则为默认的配置文件
+# profile的后缀必须跟随默认的配置文件来
+# 配置文件的优先级（优先级大的会覆盖优先级小的）: profile > 默认配置文件
+#以上这些都不是最推荐的，最推荐的还是结合namespace来进行管理
+# 对应的 DATAID: ${spring.application.name}-${profile}.${file.properties}

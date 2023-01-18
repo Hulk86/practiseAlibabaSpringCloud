@@ -1,0 +1,76 @@
+spring:
+
+  #这些是nacos-discovery的，不能替代 nacos-config 功能的配置，两者不同
+  cloud:
+    nacos:
+      discovery:
+        #server-addr: 127.0.0.1:8848
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        # 如果没有指定命令空间，则默认命令空间为PUBLIC (好像除了PUBLIC，其他的时候用名字不行，必须用id)
+        namespace: a879cac6-3fac-4ddb-822a-36132829d72c
+        group: DemoAliCloud1
+
+      config:
+        # nacos config服务器的地址
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        file-extension: yml
+        # prefix: 文件名前缀，默认是spring.application.name
+        prefix: sentinel-product
+        # 如果没有指定命令空间，则默认命令空间为PUBLIC (好像除了PUBLIC，其他的时候用名字不行，必须用id)
+        namespace: a879cac6-3fac-4ddb-822a-36132829d72c
+        #namespace: public
+        # 如果没有配置Group，则默认值为DEFAULT_GROUP
+        group: DemoAliCloud1
+        # 从Nacos读取配置项的超时时间
+        timeout: 5000
+        # 长轮询超时时间
+        config-long-poll-timeout: 10000
+        # 轮询的重试时间
+        config-retry-time: 2000
+        # 长轮询最大重试次数
+        max-retry: 3
+        # 开启监听和自动刷新
+        refresh-enabled: true
+        # Nacos的扩展配置项（其他的配置文件），数字越大优先级越高
+        extension-configs:
+          - dataId: redis-config.yml
+            group: EXT_GROUP
+            # 动态刷新
+            refresh: true
+
+          - dataId: rabbitmq-config.yml
+            group: EXT_GROUP
+            refresh: true
+
+  #        ephemeral: false #永久实例
+  #        service: nacos-consumer
+
+
+
+
+  # 调用链 Sleuth + ZipKin
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    enabled: true
+    base-url: http://192.168.135.1:9411/ # 指定了Zipkin服务器的地址
+    discoveryClientEnabled: false
+    sender:
+      type: web
+
+#rstyro:
+#  shiro:
+#    enabled: true
+#shiro:
+#  enabled: true
+#  annotations:
+#    enabled: false
+

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.cloud.alibaba.mybatisplus.db.mapper.auto.ProductMapper">
+
+
+  <select id="findAllProduct"  resultMap="com.study.cloud.alibaba.mybatisplus.db.model.auto.Product">
+    select * from product
+  </select>
+
+</mapper>
+
+
+<!--
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 数量
+     */
+    private Double amount;
+
+    /**
+     * 放置的托盘，如果托盘被解绑，商品的bindTray也会改成解绑后的临时位置
+     */
+    private String bindTrayId;
+
+    private LocalDateTime createTimestamp;
+
+    private String description;
+
+    private LocalDateTime lastUpdateTime;
+
+    /**
+     * 比如锁定了状态，表示物品被出货选定
+     */
+    private String state;
+
+    /**
+     * 货品类型编号，对应productInfo 的serial_id
+     */
+    private String templateId;
+-->

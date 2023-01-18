@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.cloud.alibaba.mybatisplus.db.mapper.auto.UserMapper">
+<!--
+  &lt;!&ndash; 查找用户信息 &ndash;&gt;
+  <select id="findAllUser" resultType="com.study.cloud.alibaba.mybatisplus.model.auto.Users">
+    select * from user
+  </select>-->
+
+</mapper>

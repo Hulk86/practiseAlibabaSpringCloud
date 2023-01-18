@@ -1,0 +1,4 @@
+server:
+  port: 38813
+  servlet:
+    context-path:

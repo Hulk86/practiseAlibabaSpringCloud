@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true">
+
+  <!--应用名称，用于区分日志记录-->
+  <property name="APP_NAME" value="order-openfeign"/>
+
+  <!--日志记录路径-->
+  <property name="LOGS_PATH" value="./logs/${APP_NAME}"/>
+  <!--property name="LOGS_PATH" value="/root/logs/mgmt"/-->
+
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--pattern>[%d{HH:mm:ss.SSS}][%-5level][%F:%L] %msg%n</pattern-->
+      <pattern>[%d{HH:mm:ss.SSS}][%-5level] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="SYSTEM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!--<appName>${APP_NAME}</appName>-->
+    <!-- 活动文件 -->
+    <File>${LOGS_PATH}/system.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS_PATH}/%d{yyyyMMdd}/system-%d{yyyyMMdd}-%i.log.zip</fileNamePattern>
+        <maxFileSize>10MB</maxFileSize>
+        <maxHistory>92</maxHistory>
+      <!-- 日志体量上限，超出删除旧的日志 -->
+        <totalSizeCap>5GB</totalSizeCap>
+    </rollingPolicy>
+    <!--用于文件存储-->
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{35}][%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="STORE_ITEM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${LOGS_PATH}/storageItem.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS_PATH}/%d{yyyyMMdd}/storageItem-%d{yyyyMMdd}-%i.log.zip</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>92</maxHistory>
+      <!-- 日志体量上限，超出删除旧的日志 -->
+      <totalSizeCap>2GB</totalSizeCap>
+    </rollingPolicy>
+    <!--用于文件存储-->
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{35}][%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="INPUT_PRODUCT_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${LOGS_PATH}/inputProduct.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS_PATH}/%d{yyyyMMdd}/inputProduct-%d{yyyyMMdd}-%i.log.zip</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>92</maxHistory>
+      <totalSizeCap>2GB</totalSizeCap>
+    </rollingPolicy>
+    <!--用于文件存储-->
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{35}][%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="OUTPUT_PRODUCT_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <File>${LOGS_PATH}/outputProduct.log</File>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOGS_PATH}/%d{yyyyMMdd}/outputProduct-%d{yyyyMMdd}-%i.log.zip</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>92</maxHistory>
+      <totalSizeCap>2GB</totalSizeCap>
+    </rollingPolicy>
+    <!--用于文件存储-->
+    <encoder>
+      <pattern>[%d{HH:mm:ss.SSS}][%-5level][%logger{35}][%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 生产务必设置为 SQL -->
+  <!-- 开发时可以设置为  STDOUT 输出控制台 -->
+  <logger name="com.study.cloud.alibaba.commons.log.SystemLogger" additivity="false" level="DEBUG">
+    <appender-ref ref="SYSTEM" />
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+  <logger name="com.study.cloud.alibaba.api.v1" additivity="false" level="DEBUG">
+    <appender-ref ref="SYSTEM" />
+    <appender-ref ref="STDOUT" />
+  </logger>
+
+
+
+  <!-- 以下配置不可修改 -->
+  <root level="INFO">
+    <appender-ref ref="SYSTEM"/>
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</configuration>

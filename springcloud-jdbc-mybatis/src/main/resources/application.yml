@@ -1,0 +1,61 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: nacos-provider
+  cloud:
+    nacos:
+      discovery:
+        #server-addr: 127.0.0.1:8848 #192.168.3.67:8819
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        namespace: public
+        ephemeral: true
+
+  # 调用链 Sleuth + ZipKin
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    enabled: true
+    base-url: http://192.168.135.1:9411/ # 指定了Zipkin服务器的地址
+    discoveryClientEnabled: false
+    sender:
+      type: web
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/testmybatis?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ganfeng
+    password: ganfeng
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    # 逻辑删除配置
+    db-config:
+      # 删除前
+      logic-not-delete-value: 1
+      # 删除后
+      logic-delete-value: 0
+#rstyro:
+#  shiro:
+#    enabled: true
+#shiro:
+#  enabled: true
+#  annotations:
+#    enabled: false

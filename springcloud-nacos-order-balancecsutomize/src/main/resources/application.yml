@@ -1,0 +1,50 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: nacos-provider
+  cloud:
+    nacos:
+      discovery:
+        #虚拟机集群
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        namespace: public
+        ephemeral: true
+
+
+  # 调用链 Sleuth + ZipKin
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    enabled: true
+    base-url: http://192.168.135.1:9411/ # 指定了Zipkin服务器的地址
+    discoveryClientEnabled: false
+    sender:
+      type: web
+
+#rstyro:
+#  shiro:
+#    enabled: true
+#shiro:
+#  enabled: true
+#  annotations:
+#    enabled: false
+
+#通过配置文件的配置项来定制负载均衡的策略，ps: 通过写配置类的 在 nacos-order-ribbon
+nacos-true-consumer:
+  ribbon:
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    # NFLoadBalancerClassName: com.alibaba.cloud.nacos.ribbon.NacosRule
+    NFLoadBalancerRuleClassName: com.study.cloud.alibaba.rule.CustomizeRule
+ribbon:
+  #开启饥饿加载(启动加载)
+  eager-load:
+    enabled: true
+    #指定哪些客户端负载均衡器使用饥饿加载，如果有多个用 ',' 隔开
+    clients: nacos-true-consume

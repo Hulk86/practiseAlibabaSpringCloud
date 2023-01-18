@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/practiseAlibabaSpringCloud.iml" filepath="$PROJECT_DIR$/practiseAlibabaSpringCloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-config-product/springcloud-config-product.iml" filepath="$PROJECT_DIR$/springcloud-config-product/springcloud-config-product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-gateway/springcloud-gateway.iml" filepath="$PROJECT_DIR$/springcloud-gateway/springcloud-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-jdbc-mybatis/springcloud-jdbc-mybatis.iml" filepath="$PROJECT_DIR$/springcloud-jdbc-mybatis/springcloud-jdbc-mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-commons/springcloud-nacos-commons.iml" filepath="$PROJECT_DIR$/springcloud-nacos-commons/springcloud-nacos-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-consumer/springcloud-nacos-consumer.iml" filepath="$PROJECT_DIR$/springcloud-nacos-consumer/springcloud-nacos-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-consumer-1/springcloud-nacos-consumer-1.iml" filepath="$PROJECT_DIR$/springcloud-nacos-consumer-1/springcloud-nacos-consumer-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-order/springcloud-nacos-order.iml" filepath="$PROJECT_DIR$/springcloud-nacos-order/springcloud-nacos-order.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-order-balancecsutomize/springcloud-nacos-order-balancecsutomize.iml" filepath="$PROJECT_DIR$/springcloud-nacos-order-balancecsutomize/springcloud-nacos-order-balancecsutomize.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-order-loadbalance/springcloud-nacos-order-loadbalance.iml" filepath="$PROJECT_DIR$/springcloud-nacos-order-loadbalance/springcloud-nacos-order-loadbalance.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-nacos-order-ribbon/springcloud-nacos-order-ribbon.iml" filepath="$PROJECT_DIR$/springcloud-nacos-order-ribbon/springcloud-nacos-order-ribbon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-openfeign-sentinel/springcloud-openfeign-sentinel.iml" filepath="$PROJECT_DIR$/springcloud-openfeign-sentinel/springcloud-openfeign-sentinel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-order-openfeign/springcloud-order-openfeign.iml" filepath="$PROJECT_DIR$/springcloud-order-openfeign/springcloud-order-openfeign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-sentinel-configatweb/springcloud-sentinel-configatweb.iml" filepath="$PROJECT_DIR$/springcloud-sentinel-configatweb/springcloud-sentinel-configatweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springcloud-sentinel-product/springcloud-sentinel-product.iml" filepath="$PROJECT_DIR$/springcloud-sentinel-product/springcloud-sentinel-product.iml" />
+    </modules>
+  </component>
+</project>

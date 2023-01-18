@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: nacos-provider
+  cloud:
+    nacos:
+      discovery:
+        #虚拟机集群
+        server-addr: 192.168.3.67:8819
+        username: nacos
+        password: nacos
+        namespace: public
+        ephemeral: true
+    #禁用 springCloud 的 ribbon
+    loadbalancer:
+      ribbon:
+        enabled: false
+
+
+  # 调用链 Sleuth + ZipKin
+  sleuth:
+    web:
+      client:
+        enabled: true
+    sampler:
+      probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    enabled: true
+    base-url: http://192.168.135.1:9411/ # 指定了Zipkin服务器的地址
+    discoveryClientEnabled: false
+    sender:
+      type: web
+
+#rstyro:
+#  shiro:
+#    enabled: true
+#shiro:
+#  enabled: true
+#  annotations:
+#    enabled: false
