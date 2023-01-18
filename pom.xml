@@ -37,6 +37,8 @@
     <app.version>1.0.0-SNAPSHOT</app.version>
     <!-- Spring Cloud Hoxton.SR8升级到Spring Cloud 2020 https://blog.csdn.net/baidu_28283893/article/details/125542656-->
     <!--spring.cloud.version>2020.0.1</spring.cloud.version-->
+
+    <!--spring.cloud.version>2020.0.1</spring.cloud.version-->
     <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
     <spring-cloud-openfeign.version>2.2.5.RELEASE</spring-cloud-openfeign.version>
   </properties>
