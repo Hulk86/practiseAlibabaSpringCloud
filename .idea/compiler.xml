@@ -3,9 +3,9 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for demo" enabled="true">
-        <sourceOutputDir name="../target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="springcloud-sentinel-configatweb" />
         <module name="springcloud-gateway" />
@@ -19,8 +19,8 @@
         <module name="springcloud-nacos-consumer" />
         <module name="springcloud-openfeign-sentinel" />
         <module name="springcloud-nacos-order" />
-        <module name="springcloud-sentinel-product" />
         <module name="springcloud-nacos-order-ribbon" />
+        <module name="springcloud-sentinel-product" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
